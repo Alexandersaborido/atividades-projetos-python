@@ -1,42 +1,75 @@
-#Crie duas listas: uma para os nomes dos produtos e outra para as quantidades correspondentes
+#Listas para receber os produtos
 nomep = []
 quantp = []
-#Pergunte ao usuário quantos produtos deseja cadastrar. Use um for para repetir a leitura de dados (nome do produto e quantidade) até completar o número informado. 
-
-
+precop = []
+#Repetição do cadastro de produtos
 while True:
     print('Cadastro de Produtos')
-    print('1 - Adicionar Itens')
-    print('2 - Remover Itens')
-    print('3 - Listar itens')
-    print ('4 - Sair da repetição')
+    print('1 - Adicionar Produtos')
+    print('2 - Remover Produtos')
+    print ('3 - Remover Quantidade de um Pruduto')
+    print('4 - Mostrar Lista de Produtos')
+    print ('5 - Encerrar Programa')
 
-    opcao = input('Digite a opção: ')
-
+    opcao = input('Digite a opção: ') 
+#Adiciona um protudo                                          
     if opcao == '1':
-        nome = input ('digite o nome do produto: ')
-        quant = int(input ('digite a quantidade de produtos: '))
+        nome = input ('Digite o nome do produto: ')
+        quant = int(input ('Digite a quantidade de produtos: '))
+        preco = float(input('Digite o preço do produto: '))
 
         if nome in nomep:
-            print ('produto ja adicionado')
+            print ('Produto ja adicionado')
         else:
             nomep.append(nome)
             quantp.append(quant)
+            precop.append(preco)
+#Remove o produto de estoque
     elif opcao == '2':
         if len(nomep) == 0:
-            print ('nao existe nada na lista')
+            print ('Não existe nenhum protudo na lista')
         else:
-            nomep.remove(nome)
-            print (f'{nome} removido com sucesso')
+            nom = input ('Digite o nome do protudo que deseja remover: ')
+            nomep.remove(nom)
+            print (f'{nom} removido com sucesso')
+#Remove certa quantidade do produto do estoque, e se não ouver mais nenhuma unidade do produto em estoque, remove ele da lista
     elif opcao == '3':
+        nm = input('Digite o nome do produto: ')
+        if nm in nomep:
+            i = nomep.index(nm)
+            qtd_remover = int(input('Digite a quantidade que deseja remover: '))
+            
+            if qtd_remover <= quantp[i]:
+                quantp[i] -= qtd_remover
+                print(f'{qtd_remover} unidades de {nm} removidas com sucesso!')
+                
+                if quantp[i] == 0:
+                    print(f'{nm} ficou com 0 unidades e foi removido da lista.')
+                    nomep.pop(i)
+                    quantp.pop(i)
+                    precop.pop(i)
+            else:
+                print('Quantidade maior do que a disponível!')
+        else:
+            print('Produto não encontrado.')
+#mostra todos os produtos cadastrados
+    elif opcao == '4':
         if len(nomep) == 0:
-            print ('nao existe nada na lista')
+            print ('Não existe nenhum protudo na lista')
         else:
             for i in range(len(nomep)):
-                print (f'Nome: {nomep[i]} | Quantidade: {quantp[i]}')
-    elif opcao == '4':
-        print ('saindo do programa...')
+                print (f'Nome: {nomep[i]} | Quantidade: {quantp[i]} | Preço: {precop[i]}')
+#encerra o programa
+    elif opcao == '5':
+        import time
+        import sys
+
+        print("Encerrando o programa", end="")
+        for i in range(3):
+            time.sleep(0.7) 
+            print(".", end="")
+            sys.stdout.flush()
+        print("\nPrograma encerrado com sucesso!")
         break
     else:
         print ('opção não encontrada')
-  
